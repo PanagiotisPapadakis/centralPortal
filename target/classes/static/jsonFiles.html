@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Apartment Records</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 30px auto;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Apartment Records</h2>
+
+<table id="apartmentTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Property ID</th>
+        <th>Address</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Bedrooms</th>
+        <th>Bathrooms</th>
+        <th>Sq Ft</th>
+        <th>Listed Date</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    // Fetch JSON from Spring Boot
+    fetch('/api/json/records')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector('#apartmentTable tbody');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.property_id}</td>
+                    <td>${item.address}</td>
+                    <td>${item.price}</td>
+                    <td>${item.property_type}</td>
+                    <td>${item.bedrooms}</td>
+                    <td>${item.bathrooms}</td>
+                    <td>${item.square_feet}</td>
+                    <td>${item.listed_date}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        });
+</script>
+
+<button onclick="window.location.href='index.html'">Back</button>
+</body>
+</html>
